@@ -2,6 +2,8 @@
 
 Inspired by the Pytorch example: https://github.com/pytorch/examples/blob/master/mnist/main.py
 """
+
+import time
 import torch
 from torchvision import datasets, transforms
 from model import SimpleClassifier
@@ -29,25 +31,30 @@ def train(model, train_loader, optimizer, epoch):
                 )
             )
 
+
 def test(model, test_loader):
     model.eval()
     test_loss = 0
     correct = 0
+    len_test_loader = len(test_loader.dataset)
     with torch.no_grad():
         for data, target in test_loader:
             output = model(data)
             test_loss += F.nll_loss(output, target, reduction="sum").item()
             pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
-    test_loss /= len(test_loader.dataset)
+    test_loss /= len_test_loader
+    accuracy = 100.0 * correct / len_test_loader
+
     print(
         "\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n".format(
             test_loss,
             correct,
-            len(test_loader.dataset),
-            100.0 * correct / len(test_loader.dataset),
+            len_test_loader,
+            accuracy
         )
     )
+    return accuracy
 
 
 if __name__ == "__main__":
@@ -62,8 +69,24 @@ if __name__ == "__main__":
     test_loader = torch.utils.data.DataLoader(dataset_test, batch_size=10)
     model = SimpleClassifier(num_classes=10, input_size=28 * 28)
     optimizer = optim.Adadelta(model.parameters(), lr=0.01)
+
     # Train and validate.
-    num_epochs = 2
+    num_epochs = 3
+    training_start_time = time.perf_counter()
+
+    test_accuracy = {k + 1: None for k in range(num_epochs)}
+
     for epoch in range(1, num_epochs + 1):
         train(model, train_loader, optimizer, epoch)
-        test(model, test_loader)
+        test_accuracy[epoch] = test(model, test_loader)
+
+
+    total_training_time = time.perf_counter() - training_start_time
+    print(f'Total training time: {total_training_time:.6f} secs')
+
+
+    print(test_accuracy)
+
+    import matplotlib.pyplot as plt
+    plt.plot(test_accuracy.keys(), test_accuracy.values())
+    plt.show()

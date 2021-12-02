@@ -1,5 +1,7 @@
 
 import torch.nn as nn
+
+
 class SimpleClassifier(nn.Module):
     """Simple classifier with one hidden layer."""
 
