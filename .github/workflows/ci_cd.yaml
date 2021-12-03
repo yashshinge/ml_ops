@@ -4,8 +4,8 @@ on:
   # Trigger the workflow on pull request to master
   pull_request:
     types: [opened, synchronize, reopened]
-    branches:
-      - master
+    branches: [master]
+
   # Also allows running this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
+      - uses: github/super_linter@v3
         with:
           python-version: '3.6'
       - name: Install dependencies
