@@ -1,0 +1,4 @@
+torch
+torchvision
+pytest==5.4.1
+matplotlib==3.5.0
