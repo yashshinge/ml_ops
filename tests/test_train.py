@@ -1,4 +1,4 @@
+from loguru import logger
 
-print("changelog 1")
-print("changelog 2")
-print("changelog 3")
+logger.debug('cool')
+logger.info('hmm')
