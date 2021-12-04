@@ -1,0 +1,10 @@
+Add automation to  Simple  Classifier We have  a basic  model training  and  evaluation  code  available  as  zip  file.
+ Using  this  code  as  a  basis, the  goal  is  to  automate  the  ML development  pipeline  such that each pull-request  automatically triggers
+ a)  linting,
+ b)  unit tests, and
+ c)  training  &  evaluation on the  current model.
+The workflow  is  also  rerun  each time  the  branch under  PR  is  updated. (edited)
+
+In addition to  passing  all  the  code-checks  and tests, there  are  two  important metrics  we would like  to  report to  the  reviewers  of a  new PR:  a)  the  total  training  time  and b)  test accuracy  at  the  end of the  training.
+
+Update the  code  to  add  additional  requirements,  gather  the  metrics  we  need, and add a  couple  of simple  unit tests  which are  missing  in the  current code. •  Use Github  Action/Gitlab CI  to  create  a  workflow that automatically  runs  tests  and reports  the  key  evaluation metrics  as  a  comment in the  pull  request. •  [Optional]  Visualize  the  test accuracy  over  the  two  epochs  as  a  simple  graph and display  along  with the  other  metrics. Update README.md  to  add your  suggestion on  how to  further  improve  the  repository  to increase  reliability  while  boosting  the  effectiveness  of the  research scientists  working  on it. Note:  that  the  actual accuracy  of  the  model is irrelevant  to  this exercise.
