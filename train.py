@@ -82,5 +82,5 @@ if __name__ == "__main__":
     logger.info(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')
 
     # Plotting
-    x, y = list(test_accuracy.keys()), list(test_accuracy.values())
+    x, y = list(test_accuracy), list(test_accuracy.values())
     plot_helper(x=x, y=y, num_epochs=num_epochs)
