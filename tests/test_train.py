@@ -1,4 +1,4 @@
-# #
+print('Working')
 # #
 # # from uniplot import plot
 # # num_epochs = 2
@@ -10,12 +10,16 @@
 # #      lines=True, title="Plot for test accuracy (y) v/s Epochs (x)")
 #
 # import terminalplot as tp
-# test_accuracy = {1: 0, 2: 100}
-#
-# x, y = list(test_accuracy.keys()), list(test_accuracy.values())
-#
+test_accuracy = {1: 0, 2: 100}
+
+x, y = list(test_accuracy.keys()), list(test_accuracy.values())
+
 # tp.plot(x,y)
-import subprocess
-gnuplot = subprocess.Popen(["/usr/bin/gnuplot"],
-                           stdin=subprocess.PIPE)
-gnuplot.stdin.write("set term dumb 79 25\n")
+
+
+
+# import termplotlib as tpl
+#
+# fig = tpl.figure()
+# fig.plot(x, y, label="data", width=50, height=15)
+# fig.show()
