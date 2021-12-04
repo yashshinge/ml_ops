@@ -3,15 +3,37 @@
 Inspired by the Pytorch example: https://github.com/pytorch/examples/blob/master/mnist/main.py
 """
 
+import sys
 import time
+import argparse
+import logging
+
 import torch
-from torchvision import datasets, transforms
-from model import SimpleClassifier
 import torch.optim as optim
 import torch.nn.functional as F
+from torchvision import datasets, transforms
+
+from model import SimpleClassifier
+
+
+def set_logger(level):
+    _logger = logging.getLogger(__name__)
+    _logger.setLevel(level.upper())
+    handler = logging.StreamHandler(sys.stdout)
+    _logger.addHandler(handler)
+
+    return _logger
+
+
+def get_args():
+    parser = argparse.ArgumentParser(description='Help decide trade')
+    parser.add_argument('-logs', '--log_level', default='INFO', type=str, metavar='', help='Log levels')
+    args = vars(parser.parse_args())
+    return args
 
 
 def train(model, train_loader, optimizer, epoch):
+    """"""
     model.train()
     log_interval = 1000
     for batch_idx, (data, target) in enumerate(train_loader):
@@ -21,11 +43,12 @@ def train(model, train_loader, optimizer, epoch):
         loss.backward()
         optimizer.step()
         if batch_idx % log_interval == 0:
-            print(f"Train Epoch: {epoch} [{batch_idx * len(data)}/{len(train_loader.dataset)} "
-                  f"({100.0 * batch_idx / len(train_loader):.0f}%)]\tLoss: {loss.item():.6f}")
+            logger.debug(f"Train Epoch: {epoch} [{batch_idx * len(data)}/{len(train_loader.dataset)} "
+                         f"({100.0 * batch_idx / len(train_loader):.0f}%)]\tLoss: {loss.item():.6f}")
 
 
 def test(model, test_loader):
+    """"""
     model.eval()
     test_loss = 0
     correct = 0
@@ -39,12 +62,16 @@ def test(model, test_loader):
     test_loss /= len_test_loader
     accuracy = 100.0 * correct / len_test_loader
 
-    print(f"\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len_test_loader} ({accuracy:.0f}%)\n")
+    logger.debug(f"\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len_test_loader} ({accuracy:.0f}%)\n")
 
     return accuracy
 
 
 if __name__ == "__main__":
+
+    args = get_args()
+    logger = set_logger(args['log_level'])
+
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
     )
@@ -67,13 +94,12 @@ if __name__ == "__main__":
         train(model, train_loader, optimizer, epoch)
         test_accuracy[epoch] = test(model, test_loader)
 
-
     total_training_time = time.perf_counter() - training_start_time
-    print(f'Total training time: {total_training_time:.6f} secs')
+    logger.info(f'Total training time: {total_training_time:.6f} secs')
 
-
-    print(f'Final test accuracy is {test_accuracy[num_epochs]}%')
+    logger.info(f'Final test accuracy is {test_accuracy[num_epochs]:.4f}%')
 
     import matplotlib.pyplot as plt
     plt.plot(test_accuracy.keys(), test_accuracy.values())
     plt.show()
+
