@@ -25,32 +25,20 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Run tests
         run: python tests/test_train.py
-      - name: Run training
-#        run: |
-#          output=$(python tests/test_train.py)
-#          output="${output//'%'/'%25'}"
-#          output="${output//$'\n'/'%0A'}"
-#          output="${output//$'\r'/'%0D'}"
-#          echo "::set-output name=changelog::$output"
-#        id: step1
-#      - name: Print changelog
-#        run: echo "${{ steps.step1.outputs.changelog }}"
-#      - uses: marocchino/sticky-pull-request-comment@v2
-#        with:
-#          message: |
-#           Release ${{ github.sha }} to ${{ steps.step1.outputs.changelog }}
+      - name: Run model training and evaluation
         id: test
         run: |
           output=$(python train.py)
           output="${output//'%'/'%25'}"
           output="${output//$'\n'/'%0A'}"
           output="${output//$'\r'/'%0D'}"
-          echo "::set-output name=training_metric::$output"
+          echo "::set-output name=metrics::$output"
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           append: true
           message: |
-                Training metrics with commit ${{ github.sha }}.
+                Hello, ${{ github.actor }}! 👋
+                Here's the report containing the metrics (commit ${{ github.sha }}):
                 ```
-                ${{ steps.test.outputs.training_metric }}
+                ${{ steps.test.outputs.metrics }}
                 ```

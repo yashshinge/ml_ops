@@ -12,7 +12,7 @@ import torch.nn.functional as F
 from torchvision import datasets, transforms
 
 from model import SimpleClassifier
-from utils import get_args, set_logger
+from utils import get_args, set_logger, plot_helper
 
 
 def train(model, train_loader, optimizer, epoch):
@@ -79,9 +79,8 @@ if __name__ == "__main__":
 
     total_training_time = time.perf_counter() - training_start_time
     logger.info(f'Total training time: {total_training_time:.3f} secs')
-    logger.info(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%')
+    logger.info(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')
 
-    import matplotlib.pyplot as plt
-    plt.plot(test_accuracy.keys(), test_accuracy.values())
-    plt.show()
-
+    # Plotting
+    x, y = list(test_accuracy.keys()), list(test_accuracy.values())
+    plot_helper(x=x, y=y, num_epochs=num_epochs)
