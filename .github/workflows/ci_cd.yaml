@@ -40,5 +40,5 @@ jobs:
                 Hello, ${{ github.actor }} 👋!,
                 Here's the report containing the metrics for commit ${{ github.sha }}:
                 ```
-                ${{ steps.test.outputs.training_metric }}
+                ${{ steps.test.outputs.metrics }}
                 ```
