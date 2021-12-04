@@ -37,7 +37,8 @@ jobs:
         with:
           append: true
           message: |
-                Training metrics with commit ${{ github.sha }}.
+                Hello ${{ github.actor }} 👋,
+                Here's the report for evaluation metrics for commit ${{ github.sha }}:
                 ```
                 ${{ steps.test.outputs.training_metric }}
                 ```

@@ -55,6 +55,9 @@ if __name__ == "__main__":
     args = get_args()
     logger = set_logger(args['log_level'])
 
+    print(logger.level, args)
+    assert 0
+
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
     )
@@ -68,7 +71,7 @@ if __name__ == "__main__":
     optimizer = optim.Adadelta(model.parameters(), lr=0.01)
 
     # Train and validate.
-    num_epochs = 2
+    num_epochs = 3
     training_start_time = time.perf_counter()
 
     test_accuracy = {k: None for k in range(1, num_epochs + 1)}
@@ -79,17 +82,8 @@ if __name__ == "__main__":
 
     total_training_time = time.perf_counter() - training_start_time
     logger.info(f'Total training time: {total_training_time:.3f} secs')
-    logger.info(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%')
-    #
-    # import matplotlib.pyplot as plt
-    # plt.plot(test_accuracy.keys(), test_accuracy.values())
-    # plt.show()
+    logger.info(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')
 
-    # from uniplot import plot
-    # print(test_accuracy)
+    # Plotting
     x, y = list(test_accuracy.keys()), list(test_accuracy.values())
-    # plot(xs=x, ys=y, x_min=1, x_gridlines=[-1], x_max=num_epochs + 1,
-    #      y_gridlines=y, y_min=max(min(y)-5, 0), y_max=min(max(y) + 5, 100),
-    #      lines=True, title="Test accuracy (y) v/s Epochs (x)")
-
     plot_helper(x=x, y=y, num_epochs=num_epochs)
