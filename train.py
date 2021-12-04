@@ -3,10 +3,8 @@
 Inspired by the Pytorch example: https://github.com/pytorch/examples/blob/master/mnist/main.py
 """
 
-import sys
+
 import time
-import argparse
-import logging
 
 import torch
 import torch.optim as optim
@@ -14,21 +12,7 @@ import torch.nn.functional as F
 from torchvision import datasets, transforms
 
 from model import SimpleClassifier
-
-
-def set_logger(level):
-    _logger = logging.getLogger(__name__)
-    _logger.setLevel(level.upper())
-    handler = logging.StreamHandler(sys.stdout)
-    _logger.addHandler(handler)
-    return _logger
-
-
-def get_args():
-    parser = argparse.ArgumentParser(description='Help decide trade')
-    parser.add_argument('--log_level', default='INFO', type=str, metavar='', help='Set log levels')
-    _args = vars(parser.parse_args())
-    return _args
+from utils import get_args, set_logger
 
 
 def train(model, train_loader, optimizer, epoch):
@@ -94,9 +78,8 @@ if __name__ == "__main__":
         test_accuracy[epoch] = test(model, test_loader)
 
     total_training_time = time.perf_counter() - training_start_time
-    logger.info(f'Total training time: {total_training_time:.6f} secs')
-
-    logger.info(f'Final test accuracy is {test_accuracy[num_epochs]:.4f}%')
+    logger.info(f'Total training time: {total_training_time:.3f} secs')
+    logger.info(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%')
 
     import matplotlib.pyplot as plt
     plt.plot(test_accuracy.keys(), test_accuracy.values())
