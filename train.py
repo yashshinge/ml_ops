@@ -88,6 +88,6 @@ if __name__ == "__main__":
     from uniplot import plot
     print(test_accuracy)
     x, y = list(test_accuracy.keys()), list(test_accuracy.values())
-    plot(xs=x, ys=y, x_min=1, x_gridlines=[-1], x_max=num_epochs + 1, y_gridlines=y, lines=True, color=True, title="Test accuracy v/s Epochs")
+    plot(xs=x, ys=y, x_min=1, x_gridlines=[-1], x_max=num_epochs + 1, y_gridlines=y, lines=True, title="Test accuracy v/s Epochs")
 
 
