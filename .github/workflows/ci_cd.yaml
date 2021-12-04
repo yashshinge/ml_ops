@@ -32,13 +32,13 @@ jobs:
           output="${output//'%'/'%25'}"
           output="${output//$'\n'/'%0A'}"
           output="${output//$'\r'/'%0D'}"
-          echo "::set-output name=training_metric::$output"
+          echo "::set-output name=metrics::$output"
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           append: true
           message: |
-                Hello ${{ github.actor }} 👋,
-                Here's the report for evaluation metrics for commit ${{ github.sha }}:
+                Hello, ${{ github.actor }} 👋!,
+                Here's the report containing the metrics for commit ${{ github.sha }}:
                 ```
                 ${{ steps.test.outputs.training_metric }}
                 ```
