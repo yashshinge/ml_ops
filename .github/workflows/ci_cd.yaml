@@ -17,7 +17,12 @@ jobs:
       - uses: actions/setup-python@v2
 #      - uses: github/super-linter@v3
         with:
-          python-version: '3.6'
+          python-version: '3.8'
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            Release ${{ github.sha }} to <https://pr-${{ github.event.number }}.example.com>
+
       - name: Install dependencies
         run: |
           python -m pip install -U pip
