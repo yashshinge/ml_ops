@@ -55,9 +55,6 @@ if __name__ == "__main__":
     args = get_args()
     logger = set_logger(args['log_level'])
 
-    print(logger.level, args)
-    assert 0
-
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
     )
