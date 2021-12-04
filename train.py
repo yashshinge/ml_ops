@@ -68,7 +68,7 @@ if __name__ == "__main__":
     optimizer = optim.Adadelta(model.parameters(), lr=0.01)
 
     # Train and validate.
-    num_epochs = 3
+    num_epochs = 2
     training_start_time = time.perf_counter()
 
     test_accuracy = {k: None for k in range(1, num_epochs + 1)}
