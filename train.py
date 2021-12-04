@@ -53,8 +53,9 @@ def test(model, test_loader):
 if __name__ == "__main__":
 
     args = get_args()
-    logger = set_logger(args['log_level'])
+    logger = set_logger(args.log_level)
 
+    torch.manual_seed(args.seed)
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
     )
@@ -81,6 +82,6 @@ if __name__ == "__main__":
     logger.info(f'Total training time: {total_training_time:.3f} secs')
     logger.info(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')
 
-    # Plotting
+    # Plotting graph for test accuracy v/s epochs
     x, y = list(test_accuracy), list(test_accuracy.values())
     plot_helper(x=x, y=y, num_epochs=num_epochs)
