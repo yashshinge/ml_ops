@@ -21,15 +21,14 @@ def set_logger(level):
     _logger.setLevel(level.upper())
     handler = logging.StreamHandler(sys.stdout)
     _logger.addHandler(handler)
-
     return _logger
 
 
 def get_args():
     parser = argparse.ArgumentParser(description='Help decide trade')
-    parser.add_argument('-logs', '--log_level', default='INFO', type=str, metavar='', help='Log levels')
-    args = vars(parser.parse_args())
-    return args
+    parser.add_argument('--log_level', default='INFO', type=str, metavar='', help='Set log levels')
+    _args = vars(parser.parse_args())
+    return _args
 
 
 def train(model, train_loader, optimizer, epoch):
