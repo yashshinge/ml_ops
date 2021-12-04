@@ -80,8 +80,14 @@ if __name__ == "__main__":
     total_training_time = time.perf_counter() - training_start_time
     logger.info(f'Total training time: {total_training_time:.3f} secs')
     logger.info(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%')
+    #
+    # import matplotlib.pyplot as plt
+    # plt.plot(test_accuracy.keys(), test_accuracy.values())
+    # plt.show()
 
-    import matplotlib.pyplot as plt
-    plt.plot(test_accuracy.keys(), test_accuracy.values())
-    plt.show()
+    from uniplot import plot
+    print(test_accuracy)
+    x, y = list(test_accuracy.keys()), list(test_accuracy.values())
+    plot(xs=x, ys=y, x_min=1, x_gridlines=[-1], x_max=num_epochs + 1, y_gridlines=y, lines=True, color=True, title="Test accuracy v/s Epochs")
+
 
