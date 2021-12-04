@@ -21,7 +21,9 @@ def get_args():
     parser = argparse.ArgumentParser(description="Simple classifier training job.")
     parser.add_argument('--log_level', default='INFO', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
                         help="Set log level (default: 'INFO')")
-    args_ = vars(parser.parse_args())
+    parser.add_argument('--seed', type=int, default=42, metavar='S',
+                        help="Random seed (default: 42)")
+    args_ = parser.parse_args()
     return args_
 
 
