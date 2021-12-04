@@ -4,7 +4,7 @@ automatically triggers
  a)  linting,
  b)  unit tests, and
  c)  training  &  evaluation on the  current model.
-The workflow  is  also  rerun  each time  the  branch under  PR  is  updated. (edited)
+The workflow  is  also  rerun  each time  the  branch under  PR  is  updated.
 
 In addition to  passing  all  the  code-checks  and tests,
 there  are  two  important metrics  we would like  to  report to  the  reviewers  of a  new PR:
