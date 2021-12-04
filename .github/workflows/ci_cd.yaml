@@ -1,9 +1,9 @@
 name: CI/CD
 
 on:
+  # Tri
   # Trigger the workflow on pull request to master
   pull_request:
-    types: [opened, synchronize, reopened]
     branches: [master]
 
   # Also allows running this workflow manually from the Actions tab
