@@ -37,7 +37,7 @@ jobs:
         with:
           append: true
           message: |
-                Hello, ${{ github.actor }} 👋!,
+                Hello, ${{ github.actor }}! 👋
                 Here's the report containing the metrics for commit ${{ github.sha }}:
                 ```
                 ${{ steps.test.outputs.metrics }}
