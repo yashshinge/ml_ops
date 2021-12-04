@@ -1,5 +1,4 @@
-torch
-torchvision
-pytest==5.4.1
-matplotlib
-uniplot
+torch==1.10.0
+torchvision==0.11.1
+pytest==6.2.5
+uniplot==0.5.0
