@@ -12,7 +12,7 @@ import torch.nn.functional as F
 from torchvision import datasets, transforms
 
 from model import SimpleClassifier
-from utils import get_args, set_logger
+from utils import get_args, set_logger, plot_helper
 
 
 def train(model, train_loader, optimizer, epoch):
@@ -85,9 +85,11 @@ if __name__ == "__main__":
     # plt.plot(test_accuracy.keys(), test_accuracy.values())
     # plt.show()
 
-    from uniplot import plot
-    print(test_accuracy)
+    # from uniplot import plot
+    # print(test_accuracy)
     x, y = list(test_accuracy.keys()), list(test_accuracy.values())
-    plot(xs=x, ys=y, x_min=1, x_gridlines=[-1], x_max=num_epochs + 1, y_gridlines=y, lines=True, title="Test accuracy v/s Epochs")
+    # plot(xs=x, ys=y, x_min=1, x_gridlines=[-1], x_max=num_epochs + 1,
+    #      y_gridlines=y, y_min=max(min(y)-5, 0), y_max=min(max(y) + 5, 100),
+    #      lines=True, title="Test accuracy (y) v/s Epochs (x)")
 
-
+    plot_helper(x=x, y=y, num_epochs=num_epochs)

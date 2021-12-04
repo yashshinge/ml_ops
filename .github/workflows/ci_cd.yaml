@@ -25,19 +25,19 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Run tests
         run: python tests/test_train.py
-      - name: Run training
-        id: test
-        run: |
-          output=$(python train.py)
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}"
-          echo "::set-output name=training_metric::$output"
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          append: true
-          message: |
-                Training metrics with commit ${{ github.sha }}.
-                ```
-                ${{ steps.test.outputs.training_metric }}
-                ```
+#      - name: Run training
+#        id: test
+#        run: |
+#          output=$(python train.py)
+#          output="${output//'%'/'%25'}"
+#          output="${output//$'\n'/'%0A'}"
+#          output="${output//$'\r'/'%0D'}"
+#          echo "::set-output name=training_metric::$output"
+#      - uses: marocchino/sticky-pull-request-comment@v2
+#        with:
+#          append: true
+#          message: |
+#                Training metrics with commit ${{ github.sha }}.
+#                ```
+#                ${{ steps.test.outputs.training_metric }}
+#                ```
