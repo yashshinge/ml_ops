@@ -29,7 +29,7 @@ def get_args():
     return args
 
 
-def plot_helper(x, y, plt_name='viz.png'):
+def plot_helper(x, y, plt_name):
     """plot"""
 
     # pylint: disable=C0103  # To maintain matplotlib standards of variable naming.
