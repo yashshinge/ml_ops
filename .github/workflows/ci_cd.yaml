@@ -45,10 +45,12 @@ jobs:
 
       - uses: iterative/setup-cml@v1
       - name: Train and evaluate model
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python train.py
 
-          cat metrics.txt >> report.md
+          cat metrics.txt  >> report.md
           cml-publish acc_epoch_plot.png --md >> report.md
           cat report.md
           cml-send-comment report.md
