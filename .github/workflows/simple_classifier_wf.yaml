@@ -36,7 +36,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LOG_LEVEL: ${{ github.event.inputs.log_level }}
         run: |
-          LOG_LEVEL=$(echo if [ -z $LOG_LEVEL ]; then 'INFO'; else $LOG_LEVEL; fi)
+          if [ -z $LOG_LEVEL ]; then LOG_LEVEL='INFO'; else $LOG_LEVEL; fi
           python train.py --log_level $LOG_LEVEL
 
           echo "#### Hello 👋 , ${{ github.actor }}! Here are the model metrics:" >> report.md
