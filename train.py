@@ -35,27 +35,31 @@ def test(model, test_loader):
     model.eval()
     test_loss = 0
     correct = 0
-    len_test_loader = len(test_loader.dataset)
+    len_test_data = len(test_loader.dataset)
     with torch.no_grad():
         for data, target in test_loader:
             output = model(data)
             test_loss += F.nll_loss(output, target, reduction="sum").item()
             pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
-    test_loss /= len_test_loader
-    accuracy = 100.0 * correct / len_test_loader
+    test_loss /= len_test_data
+    accuracy = 100.0 * correct / len_test_data
 
-    logger.debug(f"\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len_test_loader} ({accuracy:.0f}%)\n")
+    logger.debug(f"\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len_test_data} ({accuracy:.0f}%)\n")
 
     return accuracy
 
 
 if __name__ == "__main__":
 
+    start_time = time.perf_counter()
+
     args = get_args()
     logger = set_logger(args.log_level)
+    num_epochs = args.epochs
+    torch.manual_seed(args.seed)  # Fixing random state for reproducibility
+    logger.debug(f'Running job with args: {vars(args)}')
 
-    torch.manual_seed(args.seed)
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
     )
@@ -69,35 +73,18 @@ if __name__ == "__main__":
     optimizer = optim.Adadelta(model.parameters(), lr=0.01)
 
     # Train and validate.
-    num_epochs = 2
-    training_start_time = time.perf_counter()
-
-    test_accuracy = {k: None for k in range(1, num_epochs + 1)}
+    test_accuracy = dict.fromkeys(range(1, num_epochs + 1))  # Placeholder for test accuracy over epochs.
 
     for epoch in range(1, num_epochs + 1):
         train(model, train_loader, optimizer, epoch)
         test_accuracy[epoch] = test(model, test_loader)
 
-    total_training_time = time.perf_counter() - training_start_time
-    logger.info(f'Total training time: {total_training_time:.3f} secs')
-    logger.info(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')
+    end_time = time.perf_counter()
 
-    # Plotting graph for test accuracy v/s epochs
-    x, y = list(test_accuracy), list(test_accuracy.values())
-    # plot_helper(x=x, y=y, num_epochs=num_epochs)
-
-    with open("metrics.txt", 'w') as outfile:
-        outfile.write(f'Total training time: {total_training_time:.3f} secs\n')
+    # Preparing report
+    with open("./metrics.txt", 'w') as outfile:
+        outfile.write(f'Total training time: {(end_time - start_time):.3f} secs\n')
         outfile.write(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')
 
-    ###
-    import matplotlib.pyplot as plt
-
-    plt.style.use('seaborn-darkgrid')
-
-    fig = plt.figure()
-    ax = plt.axes()
-    ax.set(xlabel="Epochs", ylabel='Accuracy (%)', title='Accuracy v/s Epochs')
-    plt.xticks(x)
-    disp = plt.plot(x, y)
-    plt.savefig('acc_epoch_plot.png')
+    x, y = list(test_accuracy), list(test_accuracy.values())
+    plot_helper(x=x, y=y, plt_name="./acc_v_epoch_plot.png")

@@ -1,10 +1,10 @@
 name: CI/CD
 
 on:
-  # Tri
-  # Trigger the workflow on pull request to master
+
+  # Trigger the workflow on pull request to main/master
   pull_request:
-    branches: [master, main]
+    branches: [main, master]
 
   # Also allows running this workflow manually from the Actions tab
   workflow_dispatch:
@@ -15,33 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-#      - uses: github/super-linter@v3
         with:
           python-version: '3.8'
-
       - name: Install dependencies
         run: |
           python -m pip install -U pip
           python -m pip install -r requirements.txt
       - name: Run tests
         run: python tests/test_train.py
-#      - name: Run model training and evaluation
-#        id: test
-#        run: |
-#          output=$(python train.py)
-#          output="${output//'%'/'%25'}"
-#          output="${output//$'\n'/'%0A'}"
-#          output="${output//$'\r'/'%0D'}"
-#          echo "::set-output name=metrics::$output"
-#      - uses: marocchino/sticky-pull-request-comment@v2
-#        with:
-#          append: true
-#          message: |
-#                Hello, ${{ github.actor }}! 👋
-#                Here's the report containing the metrics:
-#                ```
-#                ${{ steps.test.outputs.metrics }}
-#                ```
 
       - uses: iterative/setup-cml@v1
       - name: Train and evaluate model
@@ -50,10 +31,10 @@ jobs:
         run: |
           python train.py
 
-          echo "#### Hello, ${{ github.actor }} 👋 ! Here are the model metrics:" >> report.md
-          cat metrics.txt  >> report.md
+          echo "#### Hello 👋 , ${{ github.actor }}! Here are the model metrics:" >> report.md
+          cat ./metrics.txt  >> report.md
 
           echo "#### Below is the visualization of model evaluation:" >> report.md
-          cml-publish acc_epoch_plot.png --md >> report.md
+          cml-publish ./acc_v_epoch_plot.png --md >> report.md
 
           cml-send-comment report.md

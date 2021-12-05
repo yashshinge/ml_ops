@@ -4,12 +4,12 @@ import sys
 import argparse
 import logging
 
-from uniplot import plot
+import matplotlib.pyplot as plt
 
 
 def set_logger(level):
     """"""
-    logger_ = logging.getLogger()
+    logger_ = logging.getLogger('simple_classifier')
     logger_.setLevel(level.upper())
     handler = logging.StreamHandler(sys.stdout)
     logger_.addHandler(handler)
@@ -21,18 +21,18 @@ def get_args():
     parser = argparse.ArgumentParser(description="Simple classifier training job.")
     parser.add_argument('--log_level', default='INFO', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
                         help="Set log level (default: 'INFO')")
-    parser.add_argument('--seed', type=int, default=42, metavar='S',
-                        help="Random seed (default: 42)")
+    parser.add_argument('--epochs', type=int, default=2, metavar='E',
+                        help="Number of epochs to train (default: 2)")
+    parser.add_argument('--seed', type=int, default=918, metavar='S',
+                        help="Random seed (default: 918)")
     args_ = parser.parse_args()
     return args_
 
 
-def plot_helper(x, y, num_epochs):
+def plot_helper(x, y, plt_name='viz.png'):
     """"""
-    if (not x) or (not y) or not(num_epochs):
-        print('No plot to display. Please check if the model training is run successfully.')
-        return
-
-    plot(xs=x, ys=y, x_min=1, x_max=num_epochs + 1, y_min=max(min(y) - 2, 0), y_max=min(max(y) + 2, 100),
-         y_unit="%", y_gridlines=y,
-         lines=True, title="Plot for test accuracy (y) v/s epochs (x)")
+    plt.style.use('seaborn-darkgrid')
+    ax = plt.axes()
+    ax.set(xticks=x, xlabel="No. of epochs", ylabel='Accuracy (%)', title='Test accuracy v/s Epochs')
+    _ = plt.plot(x, y)
+    plt.savefig(plt_name)
