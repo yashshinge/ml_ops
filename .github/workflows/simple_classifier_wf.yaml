@@ -36,8 +36,8 @@ jobs:
       - name: Train and evaluate model
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LOG_LEVEL: if [ -z ${{ github.event.inputs.log_level }} ]; then 'INFO'; else ${github.event.inputs.log_level}; fi
         run: |
+          echo "if [ -z ${{ github.event.inputs.log_level }} ]; then 'INFO'; else ${github.event.inputs.log_level}; fi" >> $LOG_LEVEL
           python train.py --log_level $LOG_LEVEL
 
           echo "#### Hello 👋 , ${{ github.actor }}! Here are the model metrics:" >> report.md
