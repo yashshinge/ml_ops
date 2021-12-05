@@ -16,7 +16,9 @@ from utils import get_args, set_logger, plot_helper
 
 
 def train(model, train_loader, optimizer, epoch):
-    """"""
+    """train"""
+
+    # pylint: disable=W0621  # Disabling 'redefined-outer-name' in this function to maintain readability.
     model.train()
     log_interval = 1000
     for batch_idx, (data, target) in enumerate(train_loader):
@@ -31,7 +33,9 @@ def train(model, train_loader, optimizer, epoch):
 
 
 def test(model, test_loader):
-    """"""
+    """test """
+
+    # pylint: disable=W0621
     model.eval()
     test_loss = 0
     correct = 0

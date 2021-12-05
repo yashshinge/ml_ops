@@ -1,0 +1,6 @@
+[FORMAT]
+max-line-length=120
+
+[MESSAGES CONTROL]
+disable=W1203
+# for W1203 - https://github.com/PyCQA/pylint/issues/2354#issuecomment-414526879
