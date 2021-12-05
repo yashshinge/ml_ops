@@ -36,8 +36,9 @@ jobs:
       - name: Train and evaluate model
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOG_LEVEL: ${{ github.event.inputs.log_level }}
         run: |
-          echo "if [ -z ${{ github.event.inputs.log_level }} ]; then 'INFO'; else ${github.event.inputs.log_level}; fi" >> $LOG_LEVEL
+          echo "if [ -z $LOG_LEVEL ]; then 'INFO'; else LOG_LEVEL; fi" >> $LOG_LEVEL
           python train.py --log_level $LOG_LEVEL
 
           echo "#### Hello 👋 , ${{ github.actor }}! Here are the model metrics:" >> report.md
@@ -47,3 +48,8 @@ jobs:
           cml-publish ./acc_v_epoch_plot.png --md >> report.md
 
           cml-send-comment report.md
+maxline='cat journald.conf | grep "#SystemMaxUse="';
+  if [ $maxline == "#SystemMaxUse=" ];
+  then sed 's/\#SystemMaxUse=/SystemMaxUse=50M/g' journald.conf > journald.conf2 && mv journald.conf2 journald.conf;
+  else echo "This file has been edited. You'll need to do it manually."; fi
+
