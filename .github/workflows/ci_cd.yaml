@@ -50,10 +50,10 @@ jobs:
         run: |
           python train.py
 
-          echo "#### Hello, ${{ github.actor }}! 👋 . Here are the model metrics:" >> report.md
+          echo "#### Hello, ${{ github.actor }} 👋 ! Here are the model metrics:" >> report.md
           cat metrics.txt  >> report.md
 
-          echo "#### Below is the visualization of model evaluation" >> report.md
+          echo "#### Below is the visualization of model evaluation:" >> report.md
           cml-publish acc_epoch_plot.png --md >> report.md
 
           cml-send-comment report.md
