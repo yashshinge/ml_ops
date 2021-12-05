@@ -4,8 +4,6 @@ on:
   # Trigger the workflow on pull request to main/master (whichever you use).
   pull_request:
     branches: [main, master]
-    env:
-      LOG_LEVEL: "INFO"
 
   # Also allows running this workflow manually from the Actions tab
   workflow_dispatch:
@@ -38,7 +36,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LOG_LEVEL: ${{ github.event.inputs.log_level }}
         run: |
-          echo "if [ -z $LOG_LEVEL ]; then 'INFO'; else $LOG_LEVEL; fi" >> $LOG_LEVEL
+          LOG_LEVEL=$(echo if [ -z $LOG_LEVEL ]; then 'INFO'; else $LOG_LEVEL; fi)
           python train.py --log_level $LOG_LEVEL
 
           echo "#### Hello 👋 , ${{ github.actor }}! Here are the model metrics:" >> report.md
