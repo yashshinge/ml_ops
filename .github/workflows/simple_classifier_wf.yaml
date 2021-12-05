@@ -1,7 +1,7 @@
 name: model-classifier
 
 on:
-  # Trigger the workflow on pull request to main/master whichever you use.
+  # Trigger the workflow on pull request to main/master (whichever you use).
   pull_request:
     branches: [main, master]
 
@@ -35,6 +35,7 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          if [[ ${{ github.event.inputs.log_level }} == '']]; ${{ github.event.inputs.log_level }}="INFO"; fi
           python train.py --log_level ${{ github.event.inputs.log_level }}
 
           echo "#### Hello 👋 , ${{ github.actor }}! Here are the model metrics:" >> report.md
