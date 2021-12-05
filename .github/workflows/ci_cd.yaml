@@ -50,8 +50,8 @@ jobs:
         run: |
           python train.py
 
-          echo "Hello, ${{ github.actor }}! 👋" >> report.md
-          echo "Here's the report containing the metrics:" >> report.md
+          echo "Hello, ${{ github.actor }}! 👋\n" >> report.md
+          echo "Here's the report containing the metrics:\n" >> report.md
           echo "----------------------------------------" >> report.md
           cat metrics.txt  >> report.md
           cml-publish acc_epoch_plot.png --md >> report.md
