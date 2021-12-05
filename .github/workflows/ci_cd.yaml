@@ -49,8 +49,10 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python train.py
-
+          echo "Hello, ${{ github.actor }}! 👋"
+          echo "Here's the report containing the metrics:"
+          echo "----------------------------------------"
           cat metrics.txt  >> report.md
           cml-publish acc_epoch_plot.png --md >> report.md
-          cat report.md
+
           cml-send-comment report.md
