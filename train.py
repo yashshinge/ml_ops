@@ -84,4 +84,20 @@ if __name__ == "__main__":
 
     # Plotting graph for test accuracy v/s epochs
     x, y = list(test_accuracy), list(test_accuracy.values())
-    plot_helper(x=x, y=y, num_epochs=num_epochs)
+    # plot_helper(x=x, y=y, num_epochs=num_epochs)
+
+    with open("metrics.txt", 'w') as outfile:
+        outfile.write(f'Total training time: {total_training_time:.3f} secs\n')
+        outfile.write(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')
+
+    ###
+    import matplotlib.pyplot as plt
+
+    plt.style.use('seaborn-darkgrid')
+
+    fig = plt.figure()
+    ax = plt.axes()
+    ax.set(xlabel="Epochs", ylabel='Accuracy (%)', title='Accuracy v/s Epochs')
+    plt.xticks(x)
+    plt.plot(x, y)
+    fig.savefig('acc_epoch_plot.png')

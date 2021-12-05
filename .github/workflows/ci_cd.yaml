@@ -25,20 +25,29 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Run tests
         run: python tests/test_train.py
-      - name: Run model training and evaluation
-        id: test
+#      - name: Run model training and evaluation
+#        id: test
+#        run: |
+#          output=$(python train.py)
+#          output="${output//'%'/'%25'}"
+#          output="${output//$'\n'/'%0A'}"
+#          output="${output//$'\r'/'%0D'}"
+#          echo "::set-output name=metrics::$output"
+#      - uses: marocchino/sticky-pull-request-comment@v2
+#        with:
+#          append: true
+#          message: |
+#                Hello, ${{ github.actor }}! 👋
+#                Here's the report containing the metrics:
+#                ```
+#                ${{ steps.test.outputs.metrics }}
+                ```
+
+      - uses: iterative/setup-cml@v1
+      - name: Train and evaluate model
         run: |
-          output=$(python train.py)
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}"
-          echo "::set-output name=metrics::$output"
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          append: true
-          message: |
-                Hello, ${{ github.actor }}! 👋
-                Here's the report containing the metrics:
-                ```
-                ${{ steps.test.outputs.metrics }}
-                ```
+          python train.py
+
+          cat metrics.txt >> report.md
+          cml-publish acc_epoch_plot.png --md >> report.md
+          cml-send-comment report.md
