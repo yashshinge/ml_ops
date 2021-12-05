@@ -62,7 +62,7 @@ if __name__ == "__main__":
     logger = set_logger(args.log_level)
     num_epochs = args.epochs
     torch.manual_seed(args.seed)  # Fixing random state for reproducibility
-    logger.debug(f'Running job with args: {vars(args)}')
+    logger.info(f'Running job with args: {vars(args)}')
 
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
