@@ -48,8 +48,3 @@ jobs:
           cml-publish ./acc_v_epoch_plot.png --md >> report.md
 
           cml-send-comment report.md
-maxline='cat journald.conf | grep "#SystemMaxUse="';
-  if [ $maxline == "#SystemMaxUse=" ];
-  then sed 's/\#SystemMaxUse=/SystemMaxUse=50M/g' journald.conf > journald.conf2 && mv journald.conf2 journald.conf;
-  else echo "This file has been edited. You'll need to do it manually."; fi
-
