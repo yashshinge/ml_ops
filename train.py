@@ -99,5 +99,5 @@ if __name__ == "__main__":
     ax = plt.axes()
     ax.set(xlabel="Epochs", ylabel='Accuracy (%)', title='Accuracy v/s Epochs')
     plt.xticks(x)
-    plt.plot(x, y)
-    fig.savefig('acc_epoch_plot.png')
+    disp = plt.plot(x, y)
+    plt.savefig('acc_epoch_plot.png')

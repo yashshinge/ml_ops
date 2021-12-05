@@ -50,4 +50,5 @@ jobs:
 
           cat metrics.txt >> report.md
           cml-publish acc_epoch_plot.png --md >> report.md
+          cat report.md
           cml-send-comment report.md
