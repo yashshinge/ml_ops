@@ -1,7 +1,7 @@
 name: model-classifier
 
 on:
-  # Trigger the workflow on pull request to main/master
+  # Trigger the workflow on pull request to main/master (whichever you use).
   pull_request:
     branches: [main, master]
 
