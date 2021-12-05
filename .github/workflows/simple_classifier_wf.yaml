@@ -7,6 +7,11 @@ on:
 
   # Also allows running this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      log_level:
+        description: 'Log level'
+        required: true
+        default: 'DEBUG'
 
 jobs:
   build:
