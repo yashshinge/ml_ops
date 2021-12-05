@@ -1,0 +1,38 @@
+name: model-classifier
+
+on:
+  # Trigger the workflow on pull request to main/master
+  pull_request:
+    branches: [main, master]
+
+  # Also allows running this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
+        run: |
+          python -m pip install -U pip
+          python -m pip install -r requirements.txt
+      - name: Run tests
+        run: python tests/test_train.py
+      - uses: iterative/setup-cml@v1
+      - name: Train and evaluate model
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python train.py
+
+          echo "#### Hello 👋 , ${{ github.actor }}! Here are the model metrics:" >> report.md
+          cat ./metrics.txt  >> report.md
+
+          echo "#### Below is the visualization of model evaluation:" >> report.md
+          cml-publish ./acc_v_epoch_plot.png --md >> report.md
+
+          cml-send-comment report.md
