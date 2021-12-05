@@ -1,4 +1,4 @@
-""""""
+"""utils"""
 
 import sys
 import argparse
@@ -8,16 +8,16 @@ import matplotlib.pyplot as plt
 
 
 def set_logger(level):
-    """"""
-    logger_ = logging.getLogger('simple_classifier')
-    logger_.setLevel(level.upper())
+    """logs"""
+    logger = logging.getLogger('simple_classifier')
+    logger.setLevel(level.upper())
     handler = logging.StreamHandler(sys.stdout)
-    logger_.addHandler(handler)
-    return logger_
+    logger.addHandler(handler)
+    return logger
 
 
 def get_args():
-    """"""
+    """args"""
     parser = argparse.ArgumentParser(description="Simple classifier training job.")
     parser.add_argument('--log_level', default='INFO', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
                         help="Set log level (default: 'INFO')")
@@ -25,12 +25,14 @@ def get_args():
                         help="Number of epochs to train (default: 2)")
     parser.add_argument('--seed', type=int, default=918, metavar='S',
                         help="Random seed (default: 918)")
-    args_ = parser.parse_args()
-    return args_
+    args = parser.parse_args()
+    return args
 
 
 def plot_helper(x, y, plt_name='viz.png'):
-    """"""
+    """plot"""
+
+    # pylint: disable=C0103  # To maintain matplotlib standards of variable naming.
     plt.style.use('seaborn-darkgrid')
     ax = plt.axes()
     ax.set(xticks=x, xlabel="No. of epochs", ylabel='Accuracy (%)', title='Test accuracy v/s Epochs')

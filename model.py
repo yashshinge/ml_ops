@@ -1,3 +1,4 @@
+"""Model module"""
 
 import torch.nn as nn
 
@@ -5,9 +6,10 @@ import torch.nn as nn
 class SimpleClassifier(nn.Module):
     """Simple classifier with one hidden layer."""
 
+    # pylint: disable=R0903  # This class currently requires only two methods.
     def __init__(self, num_classes, input_size, num_hidden_units=10):
-        super(SimpleClassifier, self).__init__()
-         
+        super().__init__()
+
         self.model = nn.Sequential(
             nn.Linear(input_size, num_hidden_units),
             nn.LeakyReLU(),
@@ -16,5 +18,6 @@ class SimpleClassifier(nn.Module):
         )
 
     def forward(self, in_image):
+        """forward"""
         input_vector = in_image.view(in_image.shape[0], -1)
         return self.model(input_vector)
