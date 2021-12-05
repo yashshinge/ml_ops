@@ -41,7 +41,7 @@ jobs:
 #                Here's the report containing the metrics:
 #                ```
 #                ${{ steps.test.outputs.metrics }}
-                ```
+#                ```
 
       - uses: iterative/setup-cml@v1
       - name: Train and evaluate model
