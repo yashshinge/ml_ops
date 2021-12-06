@@ -12,13 +12,13 @@ import torch.nn.functional as F
 from torchvision import datasets, transforms
 
 from model import SimpleClassifier
-from utils import get_args, set_logger, plot_helper
+from utils import get_args, plot_helper
 
 
 def train(model, train_loader, optimizer, epoch):
     """train"""
 
-    # pylint: disable=W0621  # Disabling 'redefined-outer-name' in this function to maintain readability.
+    # pylint: disable=W0621  # Disabling 'redefined-outer-name' in train and test functions to maintain readability.
     model.train()
     log_interval = 1000
     for batch_idx, (data, target) in enumerate(train_loader):
@@ -28,8 +28,8 @@ def train(model, train_loader, optimizer, epoch):
         loss.backward()
         optimizer.step()
         if batch_idx % log_interval == 0:
-            logger.debug(f"Train Epoch: {epoch} [{batch_idx * len(data)}/{len(train_loader.dataset)} "
-                         f"({100.0 * batch_idx / len(train_loader):.0f}%)]\tLoss: {loss.item():.6f}")
+            print(f"Train Epoch: {epoch} [{batch_idx * len(data)}/{len(train_loader.dataset)} "
+                  f"({100.0 * batch_idx / len(train_loader):.0f}%)]\tLoss: {loss.item():.6f}")
 
 
 def test(model, test_loader):
@@ -49,7 +49,7 @@ def test(model, test_loader):
     test_loss /= len_test_data
     accuracy = 100.0 * correct / len_test_data
 
-    logger.debug(f"\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len_test_data} ({accuracy:.0f}%)\n")
+    print(f"\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len_test_data} ({accuracy:.0f}%)\n")
 
     return accuracy
 
@@ -59,10 +59,9 @@ if __name__ == "__main__":
     start_time = time.perf_counter()
 
     args = get_args()
-    logger = set_logger(args.log_level)
     num_epochs = args.epochs
     torch.manual_seed(args.seed)  # Fixing random state for reproducibility
-    logger.info(f'Running job with args: {vars(args)}')
+    print(f'Running job with args: {vars(args)}')
 
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
