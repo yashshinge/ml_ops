@@ -23,7 +23,8 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Linting
         run: |
-          pylint **/*.py
+          pylint *.py
+          pylint tests/*.py
       - name: Run tests
         run: pytest -v
       - uses: iterative/setup-cml@v1
