@@ -7,7 +7,7 @@ Inspired by the Pytorch example: https://github.com/pytorch/examples/blob/master
 import time
 
 import torch
-import torch.optim as optim
+from torch import optim
 import torch.nn.functional as F
 from torchvision import datasets, transforms
 

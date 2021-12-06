@@ -7,7 +7,7 @@ import io
 from contextlib import redirect_stdout
 
 import torch
-import torch.optim as optim
+from torch import optim
 from torchvision import datasets, transforms
 
 import train

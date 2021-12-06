@@ -7,7 +7,7 @@ import sys
 import pytest
 
 import torch
-import torch.nn as nn
+from torch import nn
 from model import SimpleClassifier
 
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
@@ -43,6 +43,7 @@ def test_init(sc):
 
 def test_forward(sc):
     """test fwd"""
+    # pylint: disable=E1101
     inp_img = torch.randn(num_hidden_units, input_size)
     out = sc.forward(in_image=inp_img)
     assert out.shape == (len(inp_img), num_classes)
