@@ -1,4 +1,4 @@
-"""Tests for the module model.py."""
+"""Tests for the module model.py"""
 
 # pylint: disable=C0103,W0621
 

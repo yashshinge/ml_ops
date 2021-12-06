@@ -32,7 +32,7 @@ def train(model, train_loader, optimizer, epoch):
 
 
 def test(model, test_loader):
-    """Validate the trained model."""
+    """Evaluate the trained model."""
 
     # pylint: disable=W0621
     model.eval()
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     model = SimpleClassifier(num_classes=10, input_size=28 * 28)
     optimizer = optim.Adadelta(model.parameters(), lr=0.01)
 
-    # Train and validate.
+    # Train and evaluate.
     test_accuracy = dict.fromkeys(range(1, num_epochs + 1))  # Placeholder for test accuracy over epochs.
 
     for epoch in range(1, num_epochs + 1):

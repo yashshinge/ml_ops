@@ -1,4 +1,4 @@
-"""Model architecture"""
+"""Model architecture."""
 
 from torch import nn
 
