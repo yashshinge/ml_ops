@@ -85,7 +85,7 @@ if __name__ == "__main__":
     end_time = time.perf_counter()
 
     # Preparing report
-    with open("./metrics.txt", 'w') as outfile:
+    with open("./metrics.txt", mode='w', encoding='utf-8') as outfile:
         outfile.write(f'Total training time: {(end_time - start_time):.3f} secs\n')
         outfile.write(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')
 
