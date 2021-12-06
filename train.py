@@ -3,7 +3,6 @@
 Inspired by the Pytorch example: https://github.com/pytorch/examples/blob/master/mnist/main.py
 """
 
-
 import time
 
 import torch
@@ -16,7 +15,7 @@ from utils import get_args, plot_helper
 
 
 def train(model, train_loader, optimizer, epoch):
-    """train"""
+    """Train the classifier model."""
 
     # pylint: disable=W0621  # Disabling 'redefined-outer-name' in train and test functions to maintain readability.
     model.train()
@@ -33,7 +32,7 @@ def train(model, train_loader, optimizer, epoch):
 
 
 def test(model, test_loader):
-    """test """
+    """Validate the trained model."""
 
     # pylint: disable=W0621
     model.eval()
@@ -50,7 +49,6 @@ def test(model, test_loader):
     accuracy = 100.0 * correct / len_test_data
 
     print(f"\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len_test_data} ({accuracy:.0f}%)\n")
-
     return accuracy
 
 
@@ -84,7 +82,7 @@ if __name__ == "__main__":
 
     end_time = time.perf_counter()
 
-    # Preparing report
+    # Prepare report
     with open("./metrics.txt", mode='w', encoding='utf-8') as outfile:
         outfile.write(f'Total training time: {(end_time - start_time):.3f} secs\n')
         outfile.write(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')

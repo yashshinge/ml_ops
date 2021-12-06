@@ -1,4 +1,4 @@
-"""Test train"""
+"""Tests for the module train.py"""
 # pylint: disable=C0103,E1121
 
 import os
@@ -17,7 +17,8 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 
 def get_fake_data(is_train):
-    """get data"""
+    """Generate fake data for testing."""
+
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
     )
@@ -27,7 +28,8 @@ def get_fake_data(is_train):
 
 
 def get_params(is_train):
-    """get params"""
+    """Gather all parameters required to the train and test functions."""
+
     dataset = get_fake_data(is_train)
     data_loader = torch.utils.data.DataLoader(dataset, batch_size=10)
     model = SimpleClassifier(num_classes=10, input_size=224 * 224 * 3)
@@ -40,18 +42,19 @@ def get_params(is_train):
 
 
 def test_train():
-    """test tra"""
+    """Test the train function."""
+
     f = io.StringIO()
     with redirect_stdout(f):
         train.train(*get_params(is_train=True))
-    out = f.getvalue()
+    out = f.getvalue()  # Stores the stdout of train function.
     assert 'Train Epoch' in out
 
 
 def test_test():
-    """test test"""
-    test_score = train.test(*get_params(is_train=False))
+    """Test the test function."""
 
+    test_score = train.test(*get_params(is_train=False))
     assert isinstance(test_score, float)
     assert test_score >= 0.0
     assert test_score <= 100.0
