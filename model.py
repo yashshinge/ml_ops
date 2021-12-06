@@ -1,4 +1,4 @@
-"""Model module"""
+"""Model architecture."""
 
 from torch import nn
 
@@ -18,6 +18,7 @@ class SimpleClassifier(nn.Module):
         )
 
     def forward(self, in_image):
-        """forward"""
+        """Forward pass."""
+
         input_vector = in_image.view(in_image.shape[0], -1)
         return self.model(input_vector)
