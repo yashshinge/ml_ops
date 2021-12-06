@@ -1,6 +1,6 @@
 """Model module"""
 
-import torch.nn as nn
+from torch import nn
 
 
 class SimpleClassifier(nn.Module):

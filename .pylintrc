@@ -1,6 +1,5 @@
+[MASTER]
+init-hook="from pylint.config import find_pylintrc; import os, sys; sys.path.append(os.path.dirname(find_pylintrc()))"
+
 [FORMAT]
 max-line-length=120
-
-[MESSAGES CONTROL]
-disable=W1203
-# W1203 - ok to keep f-string in logger (https://github.com/PyCQA/pylint/issues/2354#issuecomment-414526879)

@@ -1,9 +1,10 @@
-name: model-classifier
+name: mnist-classifier
 
 on:
-  # Trigger the workflow on pull request to main/master (whichever you use).
+  # Trigger the workflow on pull request to main.
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
 
   # Also allows running this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,9 +23,10 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Linting
         run: |
-          pylint **/*.py
+          pylint *.py
+          pylint tests/*.py
       - name: Run tests
-        run: python tests/test_train.py
+        run: pytest -v
       - uses: iterative/setup-cml@v1
       - name: Train and evaluate model
         env:
