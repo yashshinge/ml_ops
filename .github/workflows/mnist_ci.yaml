@@ -32,7 +32,7 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python train.py --epochs 5
+          python train.py
 
           echo "#### Hello 👋 , ${{ github.actor }}! Here are the model metrics:" >> report.md
           cat ./metrics.md  >> report.md
