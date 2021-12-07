@@ -84,8 +84,9 @@ if __name__ == "__main__":
 
     # Prepare report
     with open("./metrics.txt", mode='w', encoding='utf-8') as outfile:
-        outfile.write(f'Total training time: {(end_time - start_time):.3f} secs\n')
-        outfile.write(f'Final test accuracy: {test_accuracy[num_epochs]:.4f}%\n')
+        outfile.write(f'|  Total training time (secs)  |  Final test accuracy (%)  |\n')
+        outfile.write(f'|  ---  |  ---  |\n')
+        outfile.write(f'|  {(end_time - start_time):.3f}  |  {test_accuracy[num_epochs]:.4f}  |')
 
     x, y = list(test_accuracy), list(test_accuracy.values())
     plot_helper(x=x, y=y, plt_name="./acc_v_epoch_plot.png")
