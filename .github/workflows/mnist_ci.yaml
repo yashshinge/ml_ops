@@ -35,7 +35,7 @@ jobs:
           python train.py
 
           echo "#### Hello 👋 , ${{ github.actor }}! Here are the model metrics:" >> report.md
-          cat ./metrics.txt  >> report.md
+          cat ./metrics.md  >> report.md
 
           echo "#### Below is the visualization of model evaluation:" >> report.md
           cml-publish ./acc_v_epoch_plot.png --md >> report.md
