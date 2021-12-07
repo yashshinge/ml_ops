@@ -83,10 +83,10 @@ if __name__ == "__main__":
     end_time = time.perf_counter()
 
     # Prepare report
-    with open("./metrics.txt", mode='w', encoding='utf-8') as outfile:
+    with open("./metrics.md", mode='w', encoding='utf-8') as outfile:
         outfile.write('|  Total training time (secs)  |  Final test accuracy (%)  |\n')
         outfile.write('|  ---  |  ---  |\n')
-        outfile.write(f'|  {(end_time - start_time):.3f}  |  {test_accuracy[num_epochs]:.4f}  |')
+        outfile.write(f'|  {(end_time - start_time):.3f}  |  {test_accuracy[num_epochs]:.4f}  |\n')
 
     x, y = list(test_accuracy), list(test_accuracy.values())
     plot_helper(x=x, y=y, plt_name="./acc_v_epoch_plot.png")
