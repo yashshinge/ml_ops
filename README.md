@@ -1,6 +1,5 @@
 # simple-classifier
 
-----
 Simple ML classifier.
 
 ## Install requirements
